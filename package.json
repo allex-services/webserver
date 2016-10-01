@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url" : "git@gitlab.hers.rs:allex_services/webserver"
+    "url": "git@gitlab.hers.rs:allex_services/webserver"
   },
   "keywords": [
     "ecosystem:allex",
@@ -16,6 +16,8 @@
     "WebServer"
   ],
   "author": "HERS Belgrade",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node-static": "0.7.x"
+  }
 }
-
