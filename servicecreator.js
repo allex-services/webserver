@@ -1,7 +1,8 @@
 function createWebServerService(execlib, ParentService) {
   'use strict';
   
-  var StaticServer = require('node-static').Server;
+  var StaticServer = require('node-static').Server,
+    lib = execlib.lib;
 
   function factoryCreator(parentFactory) {
     return {
@@ -11,7 +12,13 @@ function createWebServerService(execlib, ParentService) {
   }
 
   function WebServerService(prophash) {
+    var path;
     ParentService.call(this, prophash);
+    this.staticServer = null;
+    if (lib.isArray(prophash.root)) {
+      path = require('path');
+      prophash.root = path.join.apply(path, prophash.root);
+    }
     this.staticServer = new StaticServer(prophash.root, prophash.cacheinterval||0);
   }
   
@@ -28,7 +35,14 @@ function createWebServerService(execlib, ParentService) {
 
   WebServerService.prototype.propertyHashDescriptor = {
     root: {
-      type: 'string'
+      oneOf: [{
+        type: 'string'
+      },{
+        type: 'array',
+        items: {
+          type: 'string'
+        }
+      }]
     }
   };
   
